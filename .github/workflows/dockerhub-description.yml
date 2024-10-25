@@ -39,11 +39,9 @@ jobs:
           .github/dockerhub-readmes.json)
         echo "Filtered matrix:"
         echo $matrix
-        echo "matrix=$matrix" >> $GITHUB_OUTPUT
-
     - name: Set matrix data
       id: set-matrix
-      run: echo "matrix=$(jq -c . < .github/dockerhub-readmes.json)" >> $GITHUB_OUTPUT
+      run: echo "matrix=$matrix" >> $GITHUB_OUTPUT
   publish-dockerhub-description:
     runs-on: ${{ github.repository_owner == 'intel' && 'intel-ubuntu-latest' || 'ubuntu-latest' }}
     needs: setup-matrix
