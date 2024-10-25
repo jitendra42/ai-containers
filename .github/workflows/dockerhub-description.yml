@@ -31,7 +31,8 @@ jobs:
       run: |
         # Get the list of files changed in the latest commit(s)
         git diff --name-only HEAD~1 ${{ github.sha }} | tee changed_files.txt
-        cat changed_files.txt
+        matrix=$(jq -c . < .github/dockerhub-readmes.json)
+        echo $matrix
     - name: Set matrix data
       id: set-matrix
       run: echo "matrix=$(jq -c . < .github/dockerhub-readmes.json)" >> $GITHUB_OUTPUT
