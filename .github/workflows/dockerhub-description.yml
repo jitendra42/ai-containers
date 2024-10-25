@@ -31,9 +31,8 @@ jobs:
       run: |
         # Get the list of files changed in the latest commit(s)
         changed_files=$(git diff --name-only HEAD~1 ${{ github.sha }} | jq -R . | jq -s .)
-        echo "Changed files:"
-        cat changed_files.txt
-    
+        echo "Changed files: $changed_files"
+        
         # Check if there are any changed files
         if [ -s changed_files.txt ]; then
           # If there are changed files, filter the JSON using jq
