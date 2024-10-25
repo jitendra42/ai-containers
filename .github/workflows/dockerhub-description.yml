@@ -34,7 +34,7 @@ jobs:
         echo "Changed files: $changed_files"
         
         # If there are changed files, filter the JSON using jq
-        matrix=$(jq --argjson changed "$changed_files" \
+        matrix=$(jq -c --argjson changed "$changed_files" \
           '.readmes |= map(select(.fname as $fname | any($changed[]; . == $fname)))' \
           .github/dockerhub-readmes.json)
         echo "Filtered matrix:"
