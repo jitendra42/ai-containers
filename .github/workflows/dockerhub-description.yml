@@ -31,6 +31,8 @@ jobs:
       run: |
         # Get the list of files changed in the latest commit(s)
         changed_files=$(git diff --name-only HEAD~1 ${{ github.sha }} | tee changed_files.txt)
+        echo $changed_files
+        cat changed_files.txt
         matrix=(jq --argfile changed <(printf '%s\n' "${changed_files[@]}") \
             '.readmes |= map(select(.fname as $fname | $changed | index($fname)))' \
             .github/dockerhub-readmes.json)
