@@ -45,11 +45,14 @@ jobs:
   publish-dockerhub-description:
     runs-on: ${{ github.repository_owner == 'intel' && 'intel-ubuntu-latest' || 'ubuntu-latest' }}
     needs: setup-matrix
-    if: ${{ fromJson(needs.setup-matrix.outputs.matrix).readmes && fromJson(needs.setup-matrix.outputs.matrix).readmes != '[]' }}
+#    if: ${{ fromJson(needs.setup-matrix.outputs.matrix).readmes && fromJson(needs.setup-matrix.outputs.matrix).readmes != '[]' }}
     strategy:
       matrix: ${{ fromJson(needs.setup-matrix.outputs.matrix) }}
       fail-fast: false
     steps:
+    - name: debug
+      run: |
+        echo ${{ fromJson(needs.setup-matrix.outputs.matrix).readmes }}
     - name: Harden Runner
       uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
       with:
