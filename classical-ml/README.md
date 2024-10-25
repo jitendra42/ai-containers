@@ -1,4 +1,4 @@
-# Intel® Optimized ML
+# Intel® Optimized ML 
 
 [Intel® Extension for Scikit-learn*] enhances the performance of [Scikit-learn*] by accelerating the training and inference of machine learning models on Intel® hardware.
 
