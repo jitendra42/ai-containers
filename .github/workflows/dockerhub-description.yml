@@ -43,7 +43,7 @@ jobs:
   publish-dockerhub-description:
     runs-on: ${{ github.repository_owner == 'intel' && 'intel-ubuntu-latest' || 'ubuntu-latest' }}
     needs: setup-matrix
-    if: ${{ needs.setup-matrix.outputs.set-matrix != '{"readmes":[]}'
+    if: ${{ needs.setup-matrix.outputs.matrix != '{"readmes":[]}' }}
     strategy:
       matrix: ${{ fromJson(needs.setup-matrix.outputs.matrix) }}
       fail-fast: false
