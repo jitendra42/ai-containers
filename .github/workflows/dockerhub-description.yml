@@ -33,18 +33,10 @@ jobs:
         changed_files=$(git diff --name-only HEAD~1 ${{ github.sha }} | sed 's|^|./|' | jq -R . | jq -s .)
         echo "Changed files: $changed_files"
         
-        # Check if there are any changed files
-        if [ -s changed_files.txt ]; then
-          # If there are changed files, filter the JSON using jq
-          matrix=$(jq --argjson changed "$changed_files" \
-            '.readmes |= map(select(.fname as $fname | any($changed[]; . == $fname)))' \
-            .github/dockerhub-readmes.json)
-        else
-          # If no files were changed, set an empty JSON array as the matrix
-          matrix='{"readmes": []}'
-          echo "No matching files found, empty JSON created."
-        fi
-    
+        # If there are changed files, filter the JSON using jq
+        matrix=$(jq --argjson changed "$changed_files" \
+          '.readmes |= map(select(.fname as $fname | any($changed[]; . == $fname)))' \
+          .github/dockerhub-readmes.json)
         echo "Filtered matrix:"
         echo $matrix
         echo "matrix=$matrix" >> $GITHUB_OUTPUT
