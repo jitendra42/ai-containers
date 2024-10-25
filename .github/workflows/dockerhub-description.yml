@@ -36,8 +36,8 @@ jobs:
         # Check if there are any changed files
         if [ -s changed_files.txt ]; then
           # If there are changed files, filter the JSON using jq
-          matrix=$(jq --argfile changed <(printf '%s\n' "${changed_files[@]}") \
-            '.readmes |= map(select(.fname as $fname | $changed | index($fname)))' \
+          matrix=$(jq --argjson changed "$changed_files" \
+            '.readmes |= map(select(.fname as $fname | any($changed[]; . == $fname)))' \
             .github/dockerhub-readmes.json)
         else
           # If no files were changed, set an empty JSON array as the matrix
